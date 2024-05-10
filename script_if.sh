@@ -22,7 +22,7 @@ if [$input = "ping"] ; then
 
 
 elif [$input = "patto"] ; then #Lo scopo é di ripristinare, sovrascrivendola, la variabile PATH, con il valore originale
-    export PATH= #valore predefinito della variabile PATH
+    export PATH= /usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin #valore predefinito della variabile PATH
 
 #Qualora nessuna di queste due condizioni si verificasse, lo statement else allora attiverà il suo comando
 
