@@ -35,7 +35,7 @@ export PATH= # Output del primo echo $PATH
 
 vi .bashrc # Entriamo a modificare il file con l'editor vi
 
-export GATTO= Meow # Inseriamo la variabile all'interno del file, per convenzione le variabili ambientali sono in maiuscolo
+export GATTO=Meow # Inseriamo la variabile all'interno del file, per convenzione le variabili ambientali sono in maiuscolo
 
 #Salviamo il file, e una volta tornati alla shell, potremo anche dopo un reboot, stampare il risultato
 
