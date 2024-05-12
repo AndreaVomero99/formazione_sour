@@ -1,4 +1,4 @@
-#! /bin/bash
+## Variabili ambientali
 
 # Procediamo tramite il comando env, impaginadolo con less, a stampare tutte le variabili ambientali al momento attive
 
