@@ -1,8 +1,8 @@
 ## Variabili ambientali
 
-# Procediamo tramite il comando env, impaginadolo con less, a stampare tutte le variabili ambientali al momento attive
+Procediamo tramite il comando env, impaginadolo con less, a stampare tutte le variabili ambientali al momento attive
 
-env | less
+# env | less
 
 #Tra queste, evidenziamo la variabile PATH con il grep
 
