@@ -24,7 +24,10 @@ Per esempio il comando cd darà un risultato differente, trattandosi di un coman
 
 Stampiamo la variabile a schermo
 
-***echo $PATH ---> /usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin***
+***echo $PATH ---> /usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:
+/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:
+/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:
+/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin***
 
 Per aggiungere una o più cartelle alla variabile, bisogna eseguire il seguente comando, seguito dal percorso desiderato
 
