@@ -48,9 +48,10 @@ Possiamo anche cambiare i proprietari, sia utente che gruppo, del file
 
 #### chown user:group foo.log
 
-Se per esempio volessimo l'utente pippo come proprietario, e il gruppo acdc come proprietario
-
-#### chown pippo:acdc foo.log
+Se per esempio volessimo l'utente pippo come proprietario, e il gruppo foobar ancora da creare come proprietario:
+ 
+#### sudo groupadd foobar
+#### chown pippo:foobar foo.log
 
 Così possiamo gestire comodamente i permessi
 
