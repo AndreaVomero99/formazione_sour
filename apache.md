@@ -1,96 +1,101 @@
-# Setup di un APACHE Web Server su Rockylinux
+# APACHE Web Server setup on RockyLinux
 
-## Download necessari:
+## Required files:
 
-### Ai fini di questi appunti, la virtual box utilizzata sarà quella di Oracle, di conseguenza tutti gli ISO saranno in architettura AMD64
+### The whole process will be hosted on an Oracle Virtual Box, hence all the ISO's shall be of an a AMD64 architecture
 
-https://rockylinux.org/it/download   _La versione scelta è stata la minimal ISO_
+https://rockylinux.org/it/download   _Minimal version of the ISO_
 
-https://www.debian.org/distrib/netinst  _Scegliere la versione AMD64_
+https://www.debian.org/distrib/netinst  _AMD64 is to be chosen_
 
-## Configurare la comunicazione di rete
+## Configure the network
 
-Per assicuraci che le due macchine virtuali comunichino fra di loro, occorrerà configurare, nelle impostazioni di entrambe e nella sezione "rete", la connessione "scheda con bridge"
+To ensure communication between the two VM's, we will need to set up a "Bridge connection" on the individual VM general settings
 
-Dopodiché potremo verificare la connettività con un ping, per esempio qualora ci trovassimo sulla macchina Rocky Linux sarebbe questa la sintassi:
+Next, we can check if all is in working order with a ping, in this case we shall try to reach the Debian machine, from Rocky:
 
 #### ping -c 3 _ip_debian_
 
-Per ottenere l'ip della macchina in cui ci troviamo, basterà utilizzare il comando ip addr:
-
+We can gather the address of our current VM with the following command:
 #### ip addr
 
-Come output verranno rappresentate informazioni sulla rete, tra cui l'ip stesso della macchina
+In the output, you will find the 32 bit IPV4 address
 
-## Configurazione VM Rocky9
+## Configure VM Rocky9
 
-### La macchina Rocky9 fungerà da server APACHE
+### Rocky will host the APACHE web server
 
-Per prima cosa, è buona prassi aggiornare il database del packet manager di Red Hat:
+First things first, we may want to update the Red Hat packet manager database
 
 #### sudo dnf update -y
 
-Con l'opzione -y, i download avverranno senza richiedere ogni volta la conferma dell'utente
+By inserting the -y, we will skip the required confirmation from the user on single package basis
 
-Fatto questo, possiamo scaricare il pacchetto di Apache, che su disto Red Hat prende il nome di httpd
+We can finally download the Apache package. Being on a Red Hat system, it will be known as httpd
+
 
 #### sudo dnf install httpd -y
 
-Ora possiamo inizializzare APACHE
+Let us now jumpstart APACHE
 
 #### sudo systemctl start httpd
 
-Con il comando seguente invece ci assicureremo che il servizio venga fatto partire ad ogni boot del sistema
+Let's be meticolous, with the next command the APACHE server will be started on every reboot, without manual input
 
 #### sudo systemctl enable httpd
 
-### Configurazione Firewall
+### Firewall settings
 
-Prima di poter effettivamente usufruire del servizio, dovremo però anche configurare il firewall, in modo che i servizi http e https siano abilitati
+We'll go nowhere if we don't take a look at the firewall settings, this would be the optimal configuration as to ensure that the service turns functional
+
 
 #### sudo firewall-cmd --permanent --zone=public --add-service=http
 #### sudo firewall-cmd --permanent --zone=public --add-service=https
 #### sudo firewall-cmd --reload
 
-### Ultime verifiche
+### Last check-up
 
-A questo punto possiamo prima restartare il servizio, per essere sicuri che le modifiche vengano effettivamente implementate, e poi verificarne lo status
+We can also restart the service, just in case something didn't quite get computed
 
 #### sudo systemctl restart httpd
 
+And we can of course get a status scan
+
 #### sudo systemctl status httpd
 
-Se tutto è andato a buon fine, dovrebbe essere evidenziato in verde chiaro che il servizio è "active(running), e "enabled"
+Should everything be in working order, we'll be able to spot a light green "active(running)" and "enabled"
 
-A questo punto lanciando come ricerca nell'url di qualsiasi browser l'ip della macchina Rocky linux, che funge da server per APACHE, potremo vedere lo scheletro della pagina web
+Now let's gather our trusty Rocky VM's ip address, and try to launch a web search with it by inserting said address in the URL. Hopefully you will be able to land on a "skeleton" web page
 
 ### Modifica pagina html del server APACHE
 
-Ora inseriremo il seguente testo all'interno del file col codice html, sovrascrivendolo e portandolo a rappresentare solamente la stringa sul browser
+Time to add a personal touch, we can overwrite by using a redirection the html file linked to the APACHE web page
 
 #### echo "Hello DevOpsTribe!" > /var/www/html/index.html
 
-Se ci fossero problemi legati ai permessi di edit del file, possiamo procedere in tale maniera
+In the event that we are not allowed to get through with the edit we may want to perform a little trick
 
 #### sudo chmod o+w /var/www/html
 
-In questo modo chiunque potrà editare la directory in cui si trova il file, e potremmo apporre le necessarie modifiche, sarebbe opportuno una volta finito togliere i permessi appena dati
+#### echo "Hello DevOpsTribe!" > /var/www/html/index.html
 
 #### sudo chmod o-w /var/www/html
 
-## Configurazione Debian
+By this action, we first gave everyone the permission to edit your file, then proceeded with the overwrite, and finally we took back the privilege 
 
-A questo punto non ci resta che utilizzare la VM Debian per eseguire un curl sull'ip della macchina Rocky, che ci permetterà di accedere alla pagina html da noi configurata
+## Configure Debian
 
-Prima di tutto bisogna installare il pacchetto col comando curl, non presente di default
+To test if Debian can reach the APACHE web page from the command line, we can follow through with a curl command
 
-_Se volessimo utilizzare solamente la versione CLi di Debian, potremmo prima di procedere utilizzare il comando sudo systemctl isolate multi-user.target_
+With it being not by default on the Debian system, we necessarily have to get its package, this time using the Debian packet manager APT
 
 #### sudo apt update
 
 #### sudo apt install curl
 
-Ultimo step, eseguiamo il comando curl per chiamare il file di html dell'altra macchina, se tutto va bene, dovrebbe dare come output la stringa "Hello DevOpsTribe!"
+Let's bring it home, it is time to proceed with our last test. 
+
+We will "curl" the ip address of the Rocky machine, should everything been gone accordingly, you will see the "Hello DevOpsTribe!" string on your terminal
 
 #### sudo curl 192.168.178.101
 
