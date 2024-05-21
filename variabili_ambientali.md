@@ -1,51 +1,51 @@
-# Variabili ambientali
+# Enviroment Variables
 
-Procediamo tramite il comando env, impaginadolo con less, a stampare tutte le variabili ambientali al momento attive
+Let's start by displaying all the currently active environment variables using the env command and piping the output to less for paging:
 
 ***env | less***
 
-Tra queste, evidenziamo la variabile PATH con il grep
+To highlight the PATH variable, we can use the grep command:
 
 ***env| grep PATH***
 
-La variabile PATH rappresenta le cartelle che il sistema scansiona per trovare i comandi eseguibili dinamicamente
-
-Il comando ls per esempio è un comando esterno, la cui locazione è verificabile tramite il comando whereis
+The PATH variable specifies the directories that the system searches to find executable commands dynamically. For example, the ls command is an external command, and its location can be verified using the whereis command:
 
 ***whereis ls ---> /usr/bin/ls***
 
-Successivamente tramite il comando type, avremo informazioni sulla natura del comando
+This will typically show the path to the ls executable, such as /usr/bin/ls.
 
 ***type ls ---> "ls ha "ls --color=auto" come alias***
 
-Per esempio il comando cd darà un risultato differente, trattandosi di un comando già presente nella shell stessa, e non avrà bisogno di librerie esterne per essere eseguito
+For example, the cd command will give a different result, as it is a built-in shell command and does not require external libraries to execute.
 
-***type cd ---> cd è un comando interno della shell***
 
-Stampiamo la variabile a schermo
+***type cd ---> cd is a shell builtin***
+
+Let's print the variable
 
 ***echo $PATH ---> /usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:
 /sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:
 /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:
 /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin***
 
-Per aggiungere una o più cartelle alla variabile, bisogna eseguire il seguente comando, seguito dal percorso desiderato
+To add one or more directories to the PATH variable, execute the following command followed by the desired path:
 
-***export PATH=$PATH:/daje/grande/roma/*** _Aggiungerà (non sovrascrivendo) le tre cartelle specificate_
+***export PATH=$PATH:/daje/grande/roma/*** _This will add the specified directories without overwriting the existing ones._
 
-Qualora si volesse ripristinare la variabile allo stato originale, basterà ridefinire la variabile con l'output originale
+If you want to restore the PATH variable to its original state, you can redefine it with the original output:
 
-***export PATH=*** _Output del primo echo $PATH_
+***export PATH=*** _Output of the first echo $PATH_
 
-Se invece volessimo inserire una variabile ambientale permanente nel disco, senza che venga cancellata ogni reboot, dovremo operare in tal maniera
+If you want to add an environment variable permanently to the disk, so it won't be erased after every reboot, you should do the following:
 
-***vi .bashrc*** _Entriamo a modificare il file con l'editor vi_
+***vi .bashrc*** _Open the file with the vi editor_
 
-Una volta all'interno del file, apporremo la modifica desiderata
+Once inside the file, make the desired modification:
 
-***export GATTO=Meow***  _Inseriamo la variabile all'interno del file, per convenzione le variabili ambientali sono in maiuscolo_
+***export GATTO=Meow***  _Add the variable to the file, by convention, environment variables are uppercase._
 
-Salviamo il file, e una volta tornati alla shell, potremo anche dopo un reboot, stampare il risultato
+Save the file, and once back in the shell, even after a reboot, you can print the result:
+
 
 ***echo $GATTO ---> Meow***
 
