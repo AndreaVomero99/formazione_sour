@@ -1,4 +1,4 @@
-# Creazione chiavi ssh
+# Generating SSH Keys
 
 In this exercise, we will create an SSH key to connect to a remote server, in this case the Rocky Linux machine already used as an Apache server in https://github.com/AndreaVomero99/formazione_sour/blob/main/apache.md
 
