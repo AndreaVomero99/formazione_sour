@@ -1,6 +1,5 @@
 # Formazione_SOUR
 
-## Scopo
+## Purpose
 
-La motivazione dietro questa repo è quella di contenere diversi appunti ed esercitazioni di scripting, allo scopo di incrementare le mie abilità nelle materie affrontate durante l'Academy, nella quale sono impegnato al momento
-
+The purpose that lies underneath this repository is to store several exercises and practices that i'm bound to learn during my tenure in the Sourcesense Academy, in which i am currently enrolled in. 
