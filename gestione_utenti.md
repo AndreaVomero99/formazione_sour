@@ -1,59 +1,61 @@
-# Gestione utenti e permessi
+# User and permissions management 
 
-## Impostazione password e account
+## Passwords and accounts setup
 
-Andiamo prima di tutto a impostare una scadenza valida alle password, in questo caso vogliamo che scadano dopo 90 giorni, e con un preavviso di 5
+Let's start by setting a valid password expiration period. In this case, we want passwords to expire after 90 days with a 5-day warning.
 
-Dovremo modificare il file seguente
+We need to modify the following file:
 
 #### sudo vi /etc/login.defs
 
-Al suo interno dovremo settare i valori in questa maniera:
+Inside the file, set the values as follows:
 
 #### PASS_MAX_DAYS 90
 #### PASS_WARN_AGE 5
 
-A questo punto possiamo creare gli utenti, creiamo per esempio l'utente 1
+Now we can create users. Let's create a user named "utente1":
 
 #### sudo useradd utente1
 
-Tramite l'opzione -p potremmo anche definire subito una password, qualora non l'avessimo fatto come nel nostro caso, possiamo operare così
+We can also set a password immediately using the -p option. In the event we skipped this option, we can fix it easily enough:
 
 #### sudo passwd utente1
 
-A quel punto ci chiederà di immettere la password
+After the command, it will ask us to insert the password.
 
-Dovremo creare singolarmente ogni utente, giacchè non c'è la possibilità di un "multiuseradd"
+We will have to create each user individually since there is no "multiuseradd" option.
 
 ## Impostazione permessi
 
-Ora possiamo sperimentare un pò con i permessi
-
-Creiamo un file tramite il comando touch
+Now we can experiment a bit with permissions. Let's create a file using the touch command:
 
 #### touch foo.log
 
-Possiamo intanto specificare che il file possa essere letto, modificato ed eseguito solamente dall'utente proprietario, ma lasciamo a tutti la possibilità di leggere
+We can specify that the file can only be read, modified, and executed by the owner, but we can still allow everyone to read it:
 
 #### chmod 744 foo.log
 
-Poniamo caso ci fossimo sbagliati, e avessimo assegnato l'esecuzione anche a tutti gli altri, possiamo comunque salvare la situazione così
+Let's say we made a mistake and gave everyone execute permission as well. We solve the pickle this way:
 
 #### chmod 745 foo.log 
 #### chmod o-x foo.log
 
-Col secondo comando rimuoviamo l'errore del comando precedente
+The second command removes the error from the previous command.
 
-Possiamo anche cambiare i proprietari, sia utente che gruppo, del file
+We can also change the owner and group of the file:
 
 #### chown user:group foo.log
 
-Se per esempio volessimo l'utente pippo come proprietario, e il gruppo foobar ancora da creare come proprietario:
+For example, if we want the user "pippo" as the owner and the group "foobar" (which we need to create first) as the group
  
 #### sudo groupadd foobar
 #### chown pippo:foobar foo.log
 
-Così possiamo gestire comodamente i permessi
+This way we can easily manage permissions.
+
+
+
+
 
 
 
