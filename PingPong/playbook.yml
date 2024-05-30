@@ -1,0 +1,66 @@
+- name: Install Docker on node1 and node2
+  hosts: bello
+  remote_user: vagrant
+  become: yes
+  tasks:
+    - name: Install Docker
+      package:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Pull Node.js Docker image
+      docker_image:
+        name: node:latest
+        source: pull
+        state: present
+
+    - name: Start Node.js container on node1
+      docker_container:
+        name: ciao
+        image: node:latest
+        state: started
+        ports:
+          - "3000:3000"
+        command: sleep infinity
+      when: inventory_hostname == 'node1'
+
+    - name: Start Node.js container on node2
+      docker_container:
+        name: ciao
+        image: node:latest
+        state: started
+        ports:
+          - "3000:3000"
+        command: sleep infinity
+      when: inventory_hostname == 'node2'
+
+    - name: Set up cron job to start the container on node1
+      cron:
+        name: "Start migration_node_container"
+        minute: "*/2"
+        job: "sudo docker start ciao && echo PING"
+      when: inventory_hostname == "node1"
+
+    - name: Set up cron job to kill the container on node1
+      cron:
+        name: "Kill migration_node_container"
+        minute: "1-59/2"
+        job: "sudo docker kill ciao && echo PONG"
+      when: inventory_hostname == "node1"
+
+    - name: Set up cron job to start the container on node2
+      cron:
+        name: "Start migration_node_container"
+        minute: "1-59/2"
+        job: "sudo docker start ciao && echo PING"
+      when: inventory_hostname == "node2"
+
+    - name: Set up cron job to kill the container on node2
+      cron:
+        name: "Kill migration_node_container"
+        minute: "*/2"
+        job: "sudo docker kill ciao && echo PONG"
+      when: inventory_hostname == "node2"
+
+
